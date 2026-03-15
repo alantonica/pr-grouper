@@ -1,0 +1,74 @@
+name: Release on Merge to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if manifest version changed
+        id: version_check
+        run: |
+          PREV_VERSION=$(git show HEAD^:public/manifest.json | jq -r .version)
+          CURR_VERSION=$(jq -r .version public/manifest.json)
+          echo "prev=$PREV_VERSION"
+          echo "curr=$CURR_VERSION"
+          if [ "$PREV_VERSION" != "$CURR_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURR_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.version_check.outputs.changed == 'true'
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm ci
+
+      - name: Build
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Zip dist
+        if: steps.version_check.outputs.changed == 'true'
+        run: zip -r extension-v${{ steps.version_check.outputs.version }}.zip dist/
+
+      - name: Create GitHub Release
+        if: steps.version_check.outputs.changed == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version_check.outputs.version }}
+          files: extension-v${{ steps.version_check.outputs.version }}.zip
+
+      - name: Publish to Chrome Web Store
+        if: steps.version_check.outputs.changed == 'true'
+        run: |
+          ACCESS_TOKEN=$(curl -s -X POST https://oauth2.googleapis.com/token \
+            -d client_id=${{ secrets.CHROME_CLIENT_ID }} \
+            -d client_secret=${{ secrets.CHROME_CLIENT_SECRET }} \
+            -d refresh_token=${{ secrets.CHROME_REFRESH_TOKEN }} \
+            -d grant_type=refresh_token | jq -r .access_token)
+
+          curl -s -X PUT \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "x-goog-api-version: 2" \
+            -T extension-v${{ steps.version_check.outputs.version }}.zip \
+            "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${{ secrets.CHROME_EXTENSION_ID }}"
+
+          curl -s -X POST \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "x-goog-api-version: 2" \
+            -H "Content-Length: 0" \
+            "https://www.googleapis.com/chromewebstore/v1.1/items/${{ secrets.CHROME_EXTENSION_ID }}/publish"

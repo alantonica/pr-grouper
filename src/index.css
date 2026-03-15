@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+/* Set a fixed width for the extension popup */
+body {
+  width: 650px;
+  min-height: 500px;
+  margin: 0;
+  background-color: #ffffff;
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Pull Request Grouper",
+  "version": "1.0.30",
+  "manifest_version": 3,
+  "permissions": ["storage", "tabs", "scripting", "tabGroups"],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
