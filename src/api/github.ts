@@ -24,7 +24,7 @@ export const fetchRepositories = async () => {
 export const fetchPullRequests = async (owner: string, repo: string) => {
   const headers = await getAuthHeaders();
   const response = await fetch(
-    `${GITHUB_API_URL}/repos/${owner}/${repo}/pulls`,
+    `${GITHUB_API_URL}/repos/${owner}/${repo}/pulls?state=open`,
     { headers },
   );
   if (!response.ok) {

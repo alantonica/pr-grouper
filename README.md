@@ -10,7 +10,7 @@ A Chrome extension to help you manage and open GitHub pull requests in grouped t
 - Authenticate with your GitHub account using a personal access token.
 - Fetch a list of your repositories.
 - Select repositories to view their open pull requests.
-- Filter pull requests by title, author, and assignees.
+- Filter pull requests by title.
 - Open individual pull requests in a new tab.
 - Open all filtered pull requests in a new tab group.
 - Open selected pull requests in a new tab group.
