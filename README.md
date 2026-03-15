@@ -37,3 +37,29 @@ A Chrome extension to help you manage and open GitHub pull requests in grouped t
 3. Go to the Chrome Developer Dashboard.
 4. Upload the zip file to the "Package" section.
 5. Fill in the store listing details and submit for review.
+
+## Contributing
+
+Contributions are welcome and appreciated! Here's how to get involved:
+
+### Reporting bugs or requesting features
+
+Use the GitHub Issues tab and select the appropriate template:
+
+- **Bug Report** — describe the problem, steps to reproduce, and expected vs. actual behavior.
+- **Feature Request** — describe the motivation and your proposed solution.
+
+Blank issues are disabled, so please use a template to ensure all necessary context is provided.
+
+### Submitting a pull request
+
+1. [Fork the repository](https://github.com/alexantonica/pr-grouper/fork) and create a branch from `main`.
+2. Make your changes, ensuring existing tests still pass (`npm test`).
+3. If adding new behavior, include tests where appropriate.
+4. Open a pull request against `main`. The PR template will guide you through the required information.
+
+### Guidelines
+
+- Keep pull requests focused — one feature or fix per PR.
+- Write clear commit messages that describe the "why", not just the "what".
+- Be respectful and constructive in all discussions — see our [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
