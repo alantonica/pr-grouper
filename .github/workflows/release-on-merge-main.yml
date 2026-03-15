@@ -51,6 +51,7 @@ jobs:
         with:
           tag_name: v${{ steps.version_check.outputs.version }}
           files: extension-v${{ steps.version_check.outputs.version }}.zip
+          generate_release_notes: true
 
       - name: Publish to Chrome Web Store
         if: steps.version_check.outputs.changed == 'true'

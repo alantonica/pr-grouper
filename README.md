@@ -1,6 +1,5 @@
 # Pull Request Grouper
 
-[![CI on PR to Main](https://github.com/alexantonica/pr-grouper/actions/workflows/ci-on-pr-merge-main.yml/badge.svg)](https://github.com/alexantonica/pr-grouper/actions/workflows/ci-on-pr-merge-main.yml)
 [![Release on Merge to Main](https://github.com/alexantonica/pr-grouper/actions/workflows/release-on-merge-main.yml/badge.svg)](https://github.com/alexantonica/pr-grouper/actions/workflows/release-on-merge-main.yml)
 [![Scheduled CI on Main](https://github.com/alexantonica/pr-grouper/actions/workflows/scheduled-ci-main.yml/badge.svg)](https://github.com/alexantonica/pr-grouper/actions/workflows/scheduled-ci-main.yml)
 
